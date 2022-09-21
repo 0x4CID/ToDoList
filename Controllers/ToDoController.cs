@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Services;
+using ToDoList.Models;
 
 namespace ToDoList.Controllers
 {
@@ -15,9 +16,18 @@ namespace ToDoList.Controllers
         {
             _ToDoItemService = toDoItemService;
         }
-        public async IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var items = await _ToDoItemService.GetUnfinishedItems();
+
+
+            var model = new ToDoViewModel()
+            {
+                Items = items
+            };
+
+            return View(model);
+
         }
     }
 }
